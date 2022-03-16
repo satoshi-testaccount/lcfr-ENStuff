@@ -68,7 +68,7 @@ class ENSniper:
 
         # REQUIRED
         self.p_key = os.getenv("PKEY")  # private key for TX's
-        self.provider = os.getenv("NODE") #or "http://192.168.1.139:8545"
+        self.provider = os.getenv("NODE") 
         
         # only for testnet, not required.
         self.infura_key = os.getenv("INFURA_KEY")
