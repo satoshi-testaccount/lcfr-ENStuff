@@ -1,4 +1,4 @@
- from web3 import Web3, HTTPProvider
+from web3 import Web3, HTTPProvider
 from eth_account import Account
 from eth_account.signers.local import LocalAccount
 from web3.middleware import construct_sign_and_send_raw_middleware
