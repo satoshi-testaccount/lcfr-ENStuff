@@ -64,10 +64,16 @@ class ENSReleased:
             expiring.append(info)
         return expiring
 
+    def isascii(self, s):
+        return len(s) == len(s.encode())
+
+    def hascaps(self, s):
+        for letter in s:
+            if letter.isupper():
+                return True
+        return False
+
     def name_to_twitter(self, expiring):
-        # create a new list of names -> expirations
-        # convert previous expiration list members to string and add them to the final list
-        # we convert them to a string, so we can post multiple results to twitter in a single post.
         final_period = []
         post_string = ""
 
@@ -75,7 +81,15 @@ class ENSReleased:
             ensname = name[0]
             date = name[1]
             to_string = f"[+] {ensname}.eth <-> {date}"
+
+            if not self.isascii(ensname):
+                to_string = f"[+] {ensname}.eth (invalid:non-ascii) <-> {date}"
+
+            if self.hascaps(ensname):
+                to_string = f"[+] {ensname}.eth (invalid:caps) <-> {date}"
+
             final_period.append(to_string)
+
         print(final_period)
         for idx, expiration in enumerate(final_period):
             post_string += expiration + "\n"
@@ -86,7 +100,6 @@ class ENSReleased:
                 post_string = ""
                 time.sleep(60)
         return
-
     def main(self):
         self.login_twitter()
         expiring = self.get_names_from_dune()
@@ -95,5 +108,5 @@ class ENSReleased:
 
 
 if __name__ == '__main__':
-    print("[+] ENS Released Twitter Bot - lcfr.eth 01/2021")
+    print("[+] ENS Released Twitter Bot - lcfr.eth 01/2022")
     ENSReleased().main()
