@@ -292,7 +292,7 @@ class ENSniper:
                         print("[+] commitment:", commitment)
                         self.commit(name, commitment)
                         print("[+] sleeping for 90 seconds.")
-                        time.sleep(90)  # give some extra time for commitment tx to confirm. 60 flat tends to revert.
+                        time.sleep(90)
                         self.register(name, salt)
 
                 time.sleep(120)  # "poll" delay
