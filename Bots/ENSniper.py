@@ -329,7 +329,6 @@ if __name__ == '__main__':
 
     parser.add_argument("--bot", dest="bot", action='store_true',
                         help="Run bot loop, checking names in DB & Price against current DutchAuctions",
-                        # require fund_wallets & keys_file
                         default=False)
 
     parser.add_argument("--duration", dest="duration", type=int,
