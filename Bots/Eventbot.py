@@ -1,3 +1,5 @@
+# monitor chain events for new registrations, renewals and priceoracle update
+
 from web3 import Web3, HTTPProvider
 import json
 import os
