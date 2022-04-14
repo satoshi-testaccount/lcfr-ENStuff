@@ -22,7 +22,7 @@ contract ENSBulkRegister {
     
     CommitInfo[] private user_commitments;
 
-    uint256 protocolFee = 10000000000000000; // 0.01 or 1% Ether fee over 1 Ether.
+    // uint256 protocolFee = 10000000000000000; // 0.01 or 1% Ether fee over 1 Ether.
 
     address owner;
 
@@ -69,11 +69,11 @@ contract ENSBulkRegister {
     function doRegisterloop(string[] memory _name, uint256 _duration) external payable { 
         uint256 totalPrice = rentPriceLoop(_name, _duration);
 
-        if( totalPrice >= 1 ether ) {
-            require(msg.value >= (totalPrice + protocolFee), "Not enough Ether sent.");
-            (bool sent, bytes memory data) = owner.call{value: protocolFee}("");
-            require(sent, "Failed to send Ether");
-        }
+        //if( totalPrice >= 1 ether ) {
+        //    require(msg.value >= (totalPrice + protocolFee), "Not enough Ether sent.");
+        //    (bool sent, bytes memory data) = owner.call{value: protocolFee}("");
+        //    require(sent, "Failed to send Ether");
+        //}
 
         require(msg.value >= (totalPrice), "Not enough Ether sent.");
 
