@@ -10,7 +10,7 @@ contract ENSBulkRegister {
 
     event log_named_string       (string key, string val);
 
-    address baseRegistrarAddr = 0x283Af0B28c62C092C9727F1Ee09c02CA627EB7F5; //lazy make a function to update it
+    address baseRegistrarAddr = 0x283Af0B28c62C092C9727F1Ee09c02CA627EB7F5;
     ETHRegistrarController controller = ETHRegistrarController(baseRegistrarAddr);
 
     struct CommitInfo {
@@ -21,8 +21,6 @@ contract ENSBulkRegister {
     }
     
     CommitInfo[] private user_commitments;
-
-    // uint256 protocolFee = 10000000000000000; // 0.01 or 1% Ether fee over 1 Ether.
 
     address owner;
 
@@ -37,10 +35,6 @@ contract ENSBulkRegister {
 
     function updateRegistrarAddr(address _newRegistrar) external onlyOwner {
         baseRegistrarAddr = _newRegistrar;
-    }
-
-    function updateProtocolFee(uint256 _newFee) external onlyOwner {
-        protocolFee = _newFee;
     }
 
     function updateOwner(address _newOwner) external onlyOwner {
@@ -68,12 +62,6 @@ contract ENSBulkRegister {
 
     function doRegisterloop(string[] memory _name, uint256 _duration) external payable { 
         uint256 totalPrice = rentPriceLoop(_name, _duration);
-
-        //if( totalPrice >= 1 ether ) {
-        //    require(msg.value >= (totalPrice + protocolFee), "Not enough Ether sent.");
-        //    (bool sent, bytes memory data) = owner.call{value: protocolFee}("");
-        //    require(sent, "Failed to send Ether");
-        //}
 
         require(msg.value >= (totalPrice), "Not enough Ether sent.");
 
