@@ -17,7 +17,6 @@ contract ENSBulkRegister {
         string  name; 
         address sender;
         bytes32 secret;
-        bytes32 commit;
         uint256 timestamp;
     }
     
@@ -58,7 +57,7 @@ contract ENSBulkRegister {
             bytes32 secret = random(msg.sender);
             bytes32 commitment = controller.makeCommitment(_name[i], msg.sender, secret); 
             controller.commit(commitment);
-            user_commitments.push(CommitInfo(_name[i], msg.sender, secret, commitment, block.timestamp));
+            user_commitments.push(CommitInfo(_name[i], msg.sender, secret, block.timestamp));
         }
     }
 
