@@ -62,7 +62,6 @@ contract ENSBulkRegister {
     }
 
     function doRegisterloop(string[] memory _name, uint256 _duration) external payable { 
-
         uint256 totalPrice = rentPriceLoop(_name, _duration);
 
         if( totalPrice >= 1 ether ) {
