@@ -27,13 +27,13 @@ contract ENSBulkRegister {
     address owner;
 
     constructor() {
-      owner = msg.sender;
+        owner = msg.sender;
     }
 
-   modifier onlyOwner {
-      require(msg.sender == owner);
-      _;
-   }
+    modifier onlyOwner {
+        require(msg.sender == owner);
+        _;
+    }
 
     function updateRegistrarAddr(address _newRegistrar) external onlyOwner {
         baseRegistrarAddr = _newRegistrar;
@@ -45,6 +45,11 @@ contract ENSBulkRegister {
 
     function updateOwner(address _newOwner) external onlyOwner {
         owner = _newOwner;
+    }
+
+    function emergencyWithdraw(address _payee) external onlyOwner {
+        (bool sent, bytes memory data) = _payee.call{value: address(this).balance}("");
+        require(sent, "Failed to send Ether");
     }
 
     // weak but does it matter?
