@@ -80,7 +80,8 @@ contract ENSBulkRegister {
         // check if they are all available on the frontend and dont allow click if name is not available.
         for( uint i; i < user_commitments.length; ++i ) {
             if( user_commitments[i].sender == msg.sender ) {
-                // require( block.timestamp >= user_commitments[i].timestamp + 1 minutes, "Commitment not old enough." ); // maybe get rid of this and do in front end.
+                // do in front end.
+                // require( block.timestamp >= user_commitments[i].timestamp + 1 minutes, "Commitment not old enough." );
                 uint price = controller.rentPrice(user_commitments[i].name, _duration);
                 controller.register{value: price}(user_commitments[i].name, user_commitments[i].sender, _duration, user_commitments[i].secret);
                 emit log_named_string("NameRegistered: ", user_commitments[i].name);
