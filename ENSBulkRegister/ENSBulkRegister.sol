@@ -69,7 +69,7 @@ contract ENSBulkRegister {
 
         require( msg.value >= totalPrice, "Not enough Ether sent.");
         
-        for( uint i; i < user_commitments.length; ++i ) {
+        for( uint i = 0; i < user_commitments.length; ++i ) {
             if( user_commitments[i].sender == msg.sender ) {
                 uint price = controller.rentPrice(user_commitments[i].name, _duration);
                 controller.register{value: price}(user_commitments[i].name, user_commitments[i].sender, _duration, user_commitments[i].secret);
@@ -80,7 +80,7 @@ contract ENSBulkRegister {
     }
 
     function cleanCommitments() internal {
-        for( uint i; i < user_commitments.length; ++i ) {
+        for( uint i = 0; i < user_commitments.length; ++i ) {
             if( user_commitments[i].sender == msg.sender ) {
                 delete(user_commitments[i]);
             }
