@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // infant level solidity, be gentle.
-// lcfr.eth // @lcfr_eth
+// lcfr.eth && @lcfr_eth
 
 pragma solidity ^0.8.7;
 
@@ -46,12 +46,16 @@ contract ENSBulkRegister {
         require(sent, "Failed to send Ether");
     }
 
-    // weak but does it matter?
+    // weak but doesnt matter much.
     function random(address _userAddress) internal view returns (bytes32) {
         return bytes32(keccak256(abi.encodePacked(block.difficulty, block.timestamp, _userAddress)));
     }
 
     function doCommitloop(string[] memory _name) external {
+        // we do this so people who have submitted commitments 
+        // but didnt execute the register command will have stuck commitments. then the rentPrice calculation would be off later.
+        // can be moved outside for "cheaper" gas - test inside vs outside.
+        cleanCommitments();
         for ( uint i = 0; i < _name.length; ++i ) {
             bytes32 secret = random(msg.sender);
             bytes32 commitment = controller.makeCommitment(_name[i], msg.sender, secret); 
@@ -63,19 +67,26 @@ contract ENSBulkRegister {
     function doRegisterloop(string[] memory _name, uint256 _duration) external payable { 
         uint256 totalPrice = rentPriceLoop(_name, _duration);
 
-        require(msg.value >= (totalPrice), "Not enough Ether sent.");
-
+        require( msg.value >= totalPrice, "Not enough Ether sent.");
+        // check usercommitments here ... maybe need to be able to remove them..
         // check if they are all available on the frontend and dont allow click if name is not available.
         for( uint i; i < user_commitments.length; ++i ) {
             if( user_commitments[i].sender == msg.sender ) {
-                // do in front end.
-                // require( block.timestamp >= user_commitments[i].timestamp + 1 minutes, "Commitment not old enough." );
+                //require( block.timestamp >= user_commitments[i].timestamp + 1 minutes, "Commitment not old enough." );
                 uint price = controller.rentPrice(user_commitments[i].name, _duration);
                 controller.register{value: price}(user_commitments[i].name, user_commitments[i].sender, _duration, user_commitments[i].secret);
+                delete(user_commitments[i]); // consume the commitment.
                 emit log_named_string("NameRegistered: ", user_commitments[i].name);
             }
         }
+    }
 
+    function cleanCommitments() internal {
+        for( uint i; i < user_commitments.length; ++i ) {
+            if( user_commitments[i].sender == msg.sender ) {
+                delete(user_commitments[i]);
+            }
+        }
     }
 
     function rentPriceLoop(string[] memory _name, uint256 _duration) public view returns(uint total) {
