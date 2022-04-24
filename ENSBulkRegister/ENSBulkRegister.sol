@@ -68,11 +68,9 @@ contract ENSBulkRegister {
         uint256 totalPrice = rentPriceLoop(_name, _duration);
 
         require( msg.value >= totalPrice, "Not enough Ether sent.");
-        // check usercommitments here ... maybe need to be able to remove them..
-        // check if they are all available on the frontend and dont allow click if name is not available.
+        
         for( uint i; i < user_commitments.length; ++i ) {
             if( user_commitments[i].sender == msg.sender ) {
-                //require( block.timestamp >= user_commitments[i].timestamp + 1 minutes, "Commitment not old enough." );
                 uint price = controller.rentPrice(user_commitments[i].name, _duration);
                 controller.register{value: price}(user_commitments[i].name, user_commitments[i].sender, _duration, user_commitments[i].secret);
                 delete(user_commitments[i]); // consume the commitment.
