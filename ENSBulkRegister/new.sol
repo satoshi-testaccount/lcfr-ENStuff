@@ -48,7 +48,7 @@ contract ENSBulkRegister {
         uint256 totalPrice = rentPriceLoop(_names, _duration);
 
         require(_names.length == _secrets.length, "names/secrets length mismatch");
-        require( msg.value >= totalPrice, "Not enough Ether sent.");
+        require(msg.value >= totalPrice, "Not enough Ether sent.");
         
         for( uint i = 0; i < _names.length; ++i ) {
             uint price = controller.rentPrice(_names[i], _duration);
