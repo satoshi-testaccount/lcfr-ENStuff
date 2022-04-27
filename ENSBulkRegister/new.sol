@@ -52,7 +52,7 @@ contract ENSBulkRegister {
     // could technically do this in the front end. remove totalPrice/rentPriceLoop. 
     // calculate totalPrice in frontend to send as value. Test gas cost to decide.
         
-    require(msg.value >= totalPrice, "Not enough Ether sent.");
+    require(msg.value >= totalPrice, "not enough eth sent.");
         
     for( uint i = 0; i < _names.length; ++i ) {
       uint price = controller.rentPrice(_names[i], _duration);
