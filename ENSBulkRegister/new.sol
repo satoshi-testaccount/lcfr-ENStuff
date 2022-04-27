@@ -48,6 +48,10 @@ contract ENSBulkRegister {
         uint256 totalPrice = rentPriceLoop(_names, _duration);
 
         require(_names.length == _secrets.length, "names/secrets length mismatch");
+        
+        // could technically do this in the front end. remove totalPrice/rentPriceLoop. 
+        // calculate totalPrice in frontend to send as value. Test gas cost to decide.
+        
         require(msg.value >= totalPrice, "Not enough Ether sent.");
         
         for( uint i = 0; i < _names.length; ++i ) {
@@ -55,6 +59,8 @@ contract ENSBulkRegister {
             controller.register{value: price}(_names[i], msg.sender, _duration, _secrets[i]);
             emit log_named_string("NameRegistered: ", _names[i]);
         }
+        
+        // check if any extra eth and refund user.
         
     }
 
