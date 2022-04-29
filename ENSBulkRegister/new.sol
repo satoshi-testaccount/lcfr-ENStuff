@@ -25,7 +25,7 @@ contract ENSBulkRegister {
   }
 
   function _updateETHRegistrarControllerContract(address _newRegistrar) external onlyOwner {
-    baseRegistrarAddr = _newRegistrar;  
+    ETHRegistrarControllerContract = _newRegistrar;  
   }
 
   function _updateContractOwner(address _newOwner) external onlyOwner {
@@ -66,7 +66,7 @@ contract ENSBulkRegister {
 
   function rentPriceLoop(string[] memory _name, uint256 _duration) public view returns(uint total) {
     uint256 total;
-    for (uint i = 0; i < _name.length; ++i {
+    for (uint i = 0; i < _name.length; ++i) {
       total += controller.rentPrice(_name[i], _duration);
     }
     return total;
