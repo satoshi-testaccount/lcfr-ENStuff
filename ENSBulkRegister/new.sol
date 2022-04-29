@@ -45,14 +45,14 @@ contract ENSBulkRegister {
 
   function doRegisterloop(string[] memory _names, bytes32[] memory _secrets, uint256 _duration) external payable { 
 
-    uint256 totalPrice = rentPriceLoop(_names, _duration);
+    //uint256 totalPrice = rentPriceLoop(_names, _duration);
 
     require(_names.length == _secrets.length, "names/secrets length mismatch");
         
     // could technically do this in the front end. remove totalPrice/rentPriceLoop. 
     // calculate totalPrice in frontend to send as value. Test gas cost to decide.
         
-    require(msg.value >= totalPrice, "not enough eth sent.");
+    // require(msg.value >= totalPrice, "not enough eth sent.");
         
     for( uint i = 0; i < _names.length; ++i ) {
       uint price = controller.rentPrice(_names[i], _duration);
