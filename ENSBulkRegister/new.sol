@@ -61,9 +61,12 @@ contract ENSBulkRegister {
       emit log_named_string("NameRegistered: ", _names[i]);
     }
         
-    // refund extra payment back to the user.  test this.  
+    // refund extra funds back to the user.  
     if(msg.value > totalPrice) {
-      payable(msg.sender).transfer(msg.value - totalPrice);
+      //couldnt get the below to work so used call() :shrug: 
+      //payable(msg.sender).transfer(msg.value - totalPrice);
+      (bool sent, bytes memory data) = msg.sender.call{value: msg.value - totalPrice}("");
+      require(sent, "refund failed.");
     }   
         
   }
