@@ -2,6 +2,11 @@
 // infant level solidity, be gentle.
 // lcfr.eth && @lcfr_eth
 
+// changes:
+// removed front running vuln, no longer generating commitment on-chain.
+// reduced code, saves gas
+// added refunding of overpayment automatically 
+
 pragma solidity ^0.8.7;
 
 import "@ensdomains/ens-contracts/contracts/ethregistrar/ETHRegistrarController.sol";
