@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: o0o0o0o0o00o
 // Infant level solidity
 // lcfr.eth
-// birdapp: @lcfr_eth, github: lcfr_eth
+// birdapp/github: @lcfr_eth
 
 pragma solidity ^0.8.7;
 
