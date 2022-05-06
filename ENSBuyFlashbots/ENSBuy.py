@@ -39,7 +39,7 @@ class ENSBuy:
         if self.test_net:
             self.ENS_PUBLIC_RESOLVER = "0x4b1488b7a6b320d2d721406204abc3eeaa9ad329"
             os.environ["FLASHBOTS_HTTP_PROVIDER_URI"] = "https://relay-goerli.flashbots.net"
-            self.provider = f"https://goerli.infura.io/v3/8684924248d942f5a44babd777eff33b" #goerli
+            self.provider = f"https://goerli.infura.io/v3/yourkey" #goerli
             print("[+] testnet enabled, connected to goerli infura node.")
             self.chainID = 5
 
